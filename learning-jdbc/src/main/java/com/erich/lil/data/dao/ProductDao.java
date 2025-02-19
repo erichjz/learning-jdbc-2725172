@@ -11,14 +11,14 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import com.erich.lil.data.entity.Customer;
 import com.erich.lil.data.entity.Product;
 import com.erich.lil.data.util.DatabaseUtils;
 
 public class ProductDao implements Dao<Product, UUID> {
 
   private Logger LOGGER = Logger.getLogger(ProductDao.class.getName());
-  private String GET_ALL = null;
+  private String GET_ALL = "select product_id, wisdom.products.name product_name, price, wisdom.vendors.naem vendor_name, wisdom.vendors.contact vendor_contact, wisdom.vendors.email vendor_email from " +
+                           "wisdom.products join wisdom.vendors on wisdom.products.vendor_id=wisdom.vendors.vendor_id";
 
   @Override
   public List<Product> getAll() {
