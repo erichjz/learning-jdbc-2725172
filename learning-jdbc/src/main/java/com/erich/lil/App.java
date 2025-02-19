@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.erich.lil.data.dao.CustomerDao;
+import com.erich.lil.data.dao.ProductDao;
 import com.erich.lil.data.dao.ServiceDao;
 import com.erich.lil.data.entity.Customer;
+import com.erich.lil.data.entity.Product;
 import com.erich.lil.data.entity.Service;
+import com.erich.lil.data.entity.Vendor;
 
 /**
  * Hello world!
@@ -16,7 +19,8 @@ import com.erich.lil.data.entity.Service;
 public class App {
     public static void main(String[] args) {
         // showServices();
-        showCustomers();
+        // showCustomers();
+        showProducts();
     }
 
     public static void showServices() {
@@ -67,5 +71,37 @@ public class App {
         System.out.println("\n*** UPDATE ***\n" + newCustomer);
         customerDao.delete(newCustomer.getCustomerId());
         System.out.println("\n*** DELETE ***\n");
+    }
+
+    public static void showProducts() {
+        ProductDao productDao = new ProductDao();
+        List<Product> products = productDao.getAll();
+
+        System.out.println("**** PRODUCTS ****");
+        System.out.println("\n*** GET_ALL ***");
+        products.forEach(System.out::println);
+
+        Optional<Product> product = productDao.getOne(products.get(0).getProductId());
+        System.out.println("\n*** GET ONE ***\n" + product.get());
+
+        Product newProduct = new Product();
+        Vendor newVendor = new Vendor();
+        newProduct.setName("CoolTrap" + System.currentTimeMillis());
+        newProduct.setPrice(new BigDecimal(4.35));
+        newVendor.setName("ACME Corporation");
+        newVendor.setContact("Wile E Coyote");
+        newVendor.setEmail("wilecoyote" + System.currentTimeMillis() + "@example.com");
+        newVendor.setPhone("(206) 555-9131");
+        newVendor.setAddress("1234 Lonely Desert Road");
+        newProduct.setVendor(newVendor);
+
+        newProduct = productDao.create(newProduct);
+        System.out.println("\n*** CREATE ***\n" + newProduct);
+//        newService.setPrice(new BigDecimal("13.45"));
+//        newService = serviceDao.update(newService);
+//        System.out.println("\n*** UPDATE ***\n" + newService);
+//        serviceDao.delete(newService.getServiceId());
+//        System.out.println("\n*** DELETE ***\n");
+
     }
 }

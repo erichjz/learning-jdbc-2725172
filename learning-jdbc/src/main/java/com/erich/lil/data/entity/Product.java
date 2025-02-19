@@ -8,11 +8,7 @@ public class Product {
   private UUID productId;
   private String name;
   private BigDecimal price;
-  private String vendorName;
-  private String vendorContact;
-  private String vendorPhone;
-  private String vendorEmail;
-  private String vendorAddress;
+  private Vendor vendor;
 
   public UUID getProductId() {
     return productId;
@@ -38,48 +34,16 @@ public class Product {
     this.price = price;
   }
 
-  public String getVendorName() {
-    return vendorName;
+  public Vendor getVendor() {
+    return vendor;
   }
 
-  public void setVendorName(String vendorName) {
-    this.vendorName = vendorName;
-  }
-
-  public String getVendorContact() {
-    return vendorContact;
-  }
-
-  public void setVendorContact(String vendorContact) {
-    this.vendorContact = vendorContact;
-  }
-
-  public String getVendorPhone() {
-    return vendorPhone;
-  }
-
-  public void setVendorPhone(String vendorPhone) {
-    this.vendorPhone = vendorPhone;
-  }
-
-  public String getVendorEmail() {
-    return vendorEmail;
-  }
-
-  public void setVendorEmail(String vendorEmail) {
-    this.vendorEmail = vendorEmail;
-  }
-
-  public String getVendorAddress() {
-    return vendorAddress;
-  }
-
-  public void setVendorAddress(String vendorAddress) {
-    this.vendorAddress = vendorAddress;
+  public void setVendor(Vendor vendor) {
+    this.vendor = vendor;
   }
 
   @Override
   public String toString() {
-    throw new UnsupportedOperationException("Product::toString");
+    return "[name: " + name + ", price: " + price + ", vendor: " + vendor + "]";
   }
 }
