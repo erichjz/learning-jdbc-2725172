@@ -15,7 +15,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.postresql</groupId>
+      <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.7.4</version>
     </dependency>

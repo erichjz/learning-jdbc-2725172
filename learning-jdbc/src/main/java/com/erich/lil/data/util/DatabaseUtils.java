@@ -1,6 +1,7 @@
 package com.erich.lil.data.util;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -14,10 +15,10 @@ public class DatabaseUtils {
 
   public static Connection getConnection() {
     if (connection == null) {
-      sychronized(DatabaseUtils.class) {
+      synchronized (DatabaseUtils.class) {
         if (connection == null) {
           try {
-            connection = DriverManager.getConection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
           } catch (SQLException e) {
             handleSqlException("DatabaseUtils.getConnection", e, LOGGER);
           }
@@ -27,7 +28,7 @@ public class DatabaseUtils {
     return connection;
   }
 
-  public static void handleSqlException(String method, SqlException e, Logger log) {
+  public static void handleSqlException(String method, SQLException e, Logger log) {
     log.warning(String.format(exceptionFormat, method, e.getMessage(), e.getErrorCode()));
     throw new RuntimeException(e);
   }
