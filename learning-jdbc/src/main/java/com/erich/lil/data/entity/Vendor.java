@@ -1,18 +1,20 @@
 package com.erich.lil.data.entity;
 
+import java.util.UUID;
+
 public class Vendor {
-  private String vendorId;
+  private UUID vendorId;
   private String name;
   private String contact;
   private String phone;
   private String email;
   private String address;
 
-  public String getVendorId() {
+  public UUID getVendorId() {
     return vendorId;
   }
 
-  public void setVendorId(String vendorId) {
+  public void setVendorId(UUID vendorId) {
     this.vendorId = vendorId;
   }
 
