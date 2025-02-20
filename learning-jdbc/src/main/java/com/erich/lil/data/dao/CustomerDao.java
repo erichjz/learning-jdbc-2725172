@@ -26,7 +26,7 @@ public class CustomerDao implements Dao<Customer, UUID> {
   private static final String GET_ALL_PAGE = "select customer_id, first_name, last_name, email, phone, address from wisdom.customers order by last_name, first_name LIMIT ? OFFSET ?";
 
   public List<Customer> getAllPaged(int pageNumber, int limit) {
-    List<Customer> customers = new ArrayList();
+    List<Customer> customers = new ArrayList<>();
     Connection connection = DatabaseUtils.getConnection();
     int offset = (pageNumber - 1) * limit;
     try (PreparedStatement statement = connection.prepareStatement(GET_ALL_PAGE)) {
