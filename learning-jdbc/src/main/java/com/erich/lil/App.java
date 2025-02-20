@@ -3,10 +3,12 @@ package com.erich.lil;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.erich.lil.data.dao.CustomerDao;
 import com.erich.lil.data.dao.ProductDao;
 import com.erich.lil.data.dao.ServiceDao;
+import com.erich.lil.data.dao.SimpleProductDao;
 import com.erich.lil.data.entity.Customer;
 import com.erich.lil.data.entity.Product;
 import com.erich.lil.data.entity.Service;
@@ -18,13 +20,17 @@ import com.erich.lil.data.entity.Vendor;
  */
 public class App {
     public static void main(String[] args) {
-        // showServices();
-        // showCustomers();
-        showProducts();
+        ServiceDao serviceDao = new ServiceDao();
+        CustomerDao customerDao = new CustomerDao();
+        // showServices(serviceDao);
+        // showCustomers(customerDao);
+        // showProducts();
+        storedProcedures();
+        orderAndLimit(serviceDao);
+        paging(customerDao);
     }
 
-    public static void showServices() {
-        ServiceDao serviceDao = new ServiceDao();
+    public static void showServices(ServiceDao serviceDao) {
         List<Service> services = serviceDao.getAll();
 
         System.out.println("**** SERVICES ****");
@@ -47,8 +53,7 @@ public class App {
 
     }
 
-    public static void showCustomers() {
-        CustomerDao customerDao = new CustomerDao();
+    public static void showCustomers(CustomerDao customerDao) {
         List<Customer> customers = customerDao.getAll();
 
         System.out.println("**** CUSTOMERS ****");
@@ -97,11 +102,31 @@ public class App {
 
         newProduct = productDao.create(newProduct);
         System.out.println("\n*** CREATE ***\n" + newProduct);
-//        newService.setPrice(new BigDecimal("13.45"));
-//        newService = serviceDao.update(newService);
-//        System.out.println("\n*** UPDATE ***\n" + newService);
-//        serviceDao.delete(newService.getServiceId());
-//        System.out.println("\n*** DELETE ***\n");
+        // newService.setPrice(new BigDecimal("13.45"));
+        // newService = serviceDao.update(newService);
+        // System.out.println("\n*** UPDATE ***\n" + newService);
+        // serviceDao.delete(newService.getServiceId());
+        // System.out.println("\n*** DELETE ***\n");
 
+    }
+
+    public static void storedProcedures() {
+        System.out.println("\n\n*** SIMPLE PRODUCT ***");
+        SimpleProductDao spdao = new SimpleProductDao();
+        UUID productId = spdao.createProduct("foobarbaz" + System.currentTimeMillis(), new BigDecimal(45.67), "Jaloo");
+        System.out.println(productId);
+    }
+
+    public static void orderAndLimit(ServiceDao serviceDao) {
+        System.out.println("\n\n*** LIMIT ***");
+        serviceDao.getAllLimit(2).forEach(System.out::println);
+    }
+
+    public static void paging(CustomerDao customerDao) {
+        System.out.println("\n\n*** PAGED ***");
+        for (int i = 1; i < 11; i++) {
+            System.out.println("Page number: " + i);
+            customerDao.getAllPaged(i, 10).forEach(System.out::println);
+        }
     }
 }
